@@ -32,8 +32,9 @@ class Node {
   final int id;
   final String title;
   final MainPicture mainPicture;
+  final int numEpisodes;
 
-  Node(this.id, this.title, this.mainPicture);
+  Node(this.id, this.title, this.mainPicture,this.numEpisodes);
 
   factory Node.fromJson(Map<String, dynamic> json) {
     return _$NodeFromJson(json);
