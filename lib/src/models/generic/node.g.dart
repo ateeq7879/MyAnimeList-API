@@ -13,5 +13,6 @@ Node _$NodeFromJson(Map<String, dynamic> json) {
     json['main_picture'] == null
         ? null
         : MainPicture.fromJson(json['main_picture'] as Map<String, dynamic>),
+    json['num_episodes'] as int,
   );
 }
