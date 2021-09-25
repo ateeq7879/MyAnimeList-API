@@ -15,30 +15,43 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:json_annotation/json_annotation.dart';
+
 import '../anime/anime.dart';
-import '../generic/main_picture.dart';
 import '../manga/manga.dart';
+import '../../helpers/date_conversion.dart';
+import 'alternative_titles.dart';
+import 'genre.dart';
+import 'main_picture.dart';
+import 'picture.dart';
+import 'recommendation.dart';
+import 'relation.dart';
+import '../anime/broadcast.dart';
+import '../anime/my_list_status.dart';
+import '../anime/start_season.dart';
+import '../anime/statistics.dart';
+import '../anime/studio.dart';
+
+part 'node.g.dart';
 
 /// [Anime] or [Manga] object with minimal fields.
 ///
 /// Returned by most methods.
 /// Use [id] to get the full [Anime] or [Manga] object, if necessary.
+@JsonSerializable(createToJson: false, fieldRename: FieldRename.snake)
 class Node {
   final int id;
   final String title;
   final MainPicture mainPicture;
+  final double mean;
+  final String status;
   final int numEpisodes;
+  final String background;
 
-  Node(this.id, this.title, this.mainPicture, this.numEpisodes);
+  Node(this.id, this.title, this.mainPicture, this.mean, this.status,
+      this.numEpisodes, this.background);
 
   factory Node.fromJson(Map<String, dynamic> json) {
-    return Node(
-      json['id'] as int,
-      json['title'] as String,
-      json['main_picture'] == null
-          ? null
-          : MainPicture.fromJson(json['main_picture'] as Map<String, dynamic>),
-      json['num_episodes'] as int,
-    );
+    return _$NodeFromJson(json);
   }
 }
