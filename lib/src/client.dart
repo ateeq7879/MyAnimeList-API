@@ -41,6 +41,16 @@ class Client {
   /// See https://myanimelist.net/blog.php?eid=835707.
   String accessToken;
 
+  final Set<String> _seasonalanimeFeild = {
+    "id",
+    "title",
+    "main_picture",
+    "mean",
+    "status",
+    "num_episodes",
+    "background"
+  };
+
   final Set<String> _animeFields = {
     "id",
     "title",
@@ -204,9 +214,15 @@ class Client {
       throw ArgumentError.value(sort, "sort");
     }
     var uri = "anime/season/$year/$season";
-    var params = {'sort': sort, 'limit': '$limit', 'offset': '$offset'};
+    var params = {
+      'sort': sort,
+      'limit': '$limit',
+      'offset': '$offset',
+      'fields': _seasonalanimeFeild.join(",")
+    };
     var json = await _handler.call(uri: uri, params: params);
     var response = GenericResponse.fromJson(json);
+    print(response.data);
     return response.data.map((e) => e.node).toList();
   }
 
@@ -310,10 +326,11 @@ class Client {
       if (sort.isNotEmpty) 'sort': sort,
       'limit': '$limit',
       'offset': '$offset',
-      'fields': 'list_status'
+      'fields': _seasonalanimeFeild.join(",")
     };
     var json = await _handler.call(uri: uri, params: params);
     var response = AnimeListResponse.fromJson(json);
+    print(response.data);
     return response.data;
   }
 
